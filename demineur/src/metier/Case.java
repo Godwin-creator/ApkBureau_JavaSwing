@@ -26,17 +26,30 @@ public class Case {
             case EtatCaseEnum.INITIAL:
                 this.etat = EtatCaseEnum.MARQUE;
                 break;
-            case EtatCaseEnum.DEVOILE:
+            case EtatCaseEnum.MARQUE:
                 this.etat = EtatCaseEnum.INITIAL;
                 break;
         }
     }
     
     public void devoiler(){
+        this.partie.demarrer(this);
         if(this.etat == EtatCaseEnum.INITIAL){
             this.etat = EtatCaseEnum.DEVOILE;
+            if(this.minee){
+                this.partie.terminerAvecEchec();
+                return;
+            }
             this.devoilerVoisines();
         }
+    }
+    
+    public boolean isDevoilee(){
+        return this.etat == EtatCaseEnum.DEVOILE;
+    }
+    
+    public boolean isMarquee(){
+        return this.etat == EtatCaseEnum.MARQUE;
     }
     
     public String getContenu(){
